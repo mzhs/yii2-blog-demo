@@ -12,7 +12,7 @@ cd yii2-blog-demo
 composer install
 ```
 
-Edit `config/web.php`and`config/console.php`:
+Edit `config/web.php` and `config/console.php`:
 
 ```php
 <?php
