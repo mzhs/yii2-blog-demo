@@ -8,8 +8,8 @@ Use Composer to install this application:
 
 ```
 $ git clone git://github.com/mzhs/yii2-blog-demo.git
-cd yii2-blog-demo
-composer install
+$ cd yii2-blog-demo
+$ composer install
 ```
 
 Edit `config/web.php` and `config/console.php`:
