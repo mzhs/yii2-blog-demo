@@ -81,6 +81,11 @@ class Post extends \yii\db\ActiveRecord
 		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
 
+	public function getComments()
+	{
+		return $this->hasMany(Comment::className(), ['post_id' => 'id']);
+	}
+
 	public function belongsToViewer()
 	{
 		if (\Yii::$app->user->isGuest)
@@ -105,7 +110,7 @@ class Post extends \yii\db\ActiveRecord
 				->one();
 	}
 
-	public function newerLink()
+	public function getNewerLink()
 	{
 		if (!$model = $this->findNewerOne())
 			return null;
@@ -113,11 +118,17 @@ class Post extends \yii\db\ActiveRecord
 		return Html::a(Html::encode($model->title), ['post/view', 'id' => $model->id]);
 	}
 
-	public function olderLink()
+	public function getOlderLink()
 	{
 		if (!$model = $this->findOlderOne())
 			return null;
 
 		return Html::a(Html::encode($model->title), ['post/view', 'id' => $model->id]);
+	}
+
+	public function addComment(Comment $comment)
+	{
+		$comment->post_id = $this->id;
+		return $comment->save();
 	}
 }

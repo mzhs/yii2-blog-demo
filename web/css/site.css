@@ -75,6 +75,25 @@ a.desc:after { content: /*"\e114"*/"\e152"; }
 	margin-bottom: 20px;
 }
 
+.navigation {
+	padding: 10px;
+	background-color: #f5f5f5;
+}
+
+.comments h2 {
+	font-size: 20px;
+}
+
+.comment {
+	margin-bottom: 40px;
+}
+
+.comment-info {
+	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+}
+
 .sidebar .item .item-heading {
 	margin-bottom: 10px;
 	padding-bottom: 3px;

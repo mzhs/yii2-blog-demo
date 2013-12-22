@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Post;
 use app\Models\PostSearch;
+use app\Models\Comment;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\AccessDeniedHttpException;
@@ -61,8 +62,15 @@ class PostController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->findModel($id, ['comments']);
+		$comment = new Comment;
+
+		if ($comment->load($_POST) && $model->addComment($comment))
+			return $this->refresh();
+
 		return $this->render('view', [
-			'model' => $this->findModel($id),
+			'model' => $model,
+			'comment' => $comment
 		]);
 	}
 
@@ -133,12 +141,17 @@ class PostController extends Controller
 	 * @return Post the loaded model
 	 * @throws NotFoundHttpException if the model cannot be found
 	 */
-	protected function findModel($id)
+	protected function findModel($id, $withList = [])
 	{
-		$model = Post::find()
-				->with('user')
+		$query = Post::find()
 				->where(['id' => $id])
-				->one();
+				->with('user');
+
+		foreach ($withList as $with) {
+			$query->with($with);
+		}
+
+		$model = $query->one();
 
 		if ($model === null)
 			throw new NotFoundHttpException('The requested page does not exist.');
